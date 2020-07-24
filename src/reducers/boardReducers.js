@@ -14,6 +14,19 @@ const boardReducers = (state = initialState, action) => {
       return { ...state, [_id]: newBoard };
     }
 
+    case CONSTANTS.GET_DATA: {
+      const dataObj = {};
+      action.payload.forEach((e) => {
+        dataObj[e._id] = {
+          id: e._id,
+          lists: e.lists,
+          title: e.title
+        };
+      });
+      state = { ...dataObj };
+      return state;
+    }
+
     default:
       return state;
   }

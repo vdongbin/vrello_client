@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addBoard } from '../actions';
+import { addBoard, getData } from '../actions';
 import styled from 'styled-components';
 import BoardThumbnail from './BoardThumbnail';
+import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    height: '500px',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+}));
 
 const Thumbnails = styled.div`
   flex: 1;
@@ -24,7 +35,7 @@ const HomeContainer = styled.div`
 
 const CreateTitle = styled.h3`
   font-size: 48px;
-  color: white;
+  color: #3f51b5;
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
 `;
@@ -37,13 +48,21 @@ const CreateInput = styled.input`
   box-sizing: border-box;
   border-radius: 3px;
   border: none;
-  outline-color: blue;
   box-shadow: 0 2px 4px grey;
-  align-self: center;
+  align-self: center;,
 `;
 
-const Home = ({ auth, boards, boardArrays, dispatch }) => {
+const Home = ({ auth, boards, boardArrays, dispatch, loading }) => {
   const [newBoardTitle, setNewBoardTitle] = useState('');
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      return;
+    }
+    dispatch(getData());
+  }, []);
+
+  const classes = useStyles();
 
   const handleChange = (e) => {
     setNewBoardTitle(e.target.value);
@@ -62,7 +81,7 @@ const Home = ({ auth, boards, boardArrays, dispatch }) => {
       return (
         <Link
           key={boardID}
-          to={`/${board.id}`}
+          to={`/board/${board.id}`}
           style={{ textDecoration: 'none' }}
         >
           <BoardThumbnail {...board} />
@@ -74,7 +93,7 @@ const Home = ({ auth, boards, boardArrays, dispatch }) => {
   const renderCreateBoard = () => {
     return (
       <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
-        <CreateTitle>Create a new Board</CreateTitle>
+        <CreateTitle>Create new board</CreateTitle>
         <CreateInput
           onChange={handleChange}
           value={newBoardTitle}
@@ -87,8 +106,16 @@ const Home = ({ auth, boards, boardArrays, dispatch }) => {
 
   return (
     <HomeContainer>
-      <Thumbnails>{renderBoards()}</Thumbnails>
-      {renderCreateBoard()}
+      {loading ? (
+        <div className={classes.root}>
+          <CircularProgress size={80} />
+        </div>
+      ) : (
+        <>
+          <Thumbnails>{renderBoards()}</Thumbnails>
+          {renderCreateBoard()}
+        </>
+      )}
     </HomeContainer>
   );
 };
@@ -96,7 +123,8 @@ const Home = ({ auth, boards, boardArrays, dispatch }) => {
 const mapStateToProps = (state) => ({
   boards: state.boards,
   boardArrays: state.boardArrays,
-  auth: state.auth
+  auth: state.auth,
+  loading: state.loading
 });
 
 export default connect(mapStateToProps)(Home);

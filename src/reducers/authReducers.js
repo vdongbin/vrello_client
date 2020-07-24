@@ -1,23 +1,27 @@
 import { CONSTANTS } from '../actions';
 
 const initialState = {
-  isAuthenticated: true,
-  userInfo: {}
+  isAuthenticated: false,
+  userInfo: {},
+  error: false
 };
 
 const authReducers = (state = initialState, action) => {
   switch (action.type) {
-    case CONSTANTS.LOGIN_SUCCESS: {
-      const { userInfo } = action.payload;
+    case CONSTANTS.SET_USER: {
       state.isAuthenticated = true;
-      state.userInfo = userInfo;
-      return state;
+      state.userInfo = action.payload;
+      return { ...state };
     }
 
-    case CONSTANTS.LOGIN_FAIL: {
-      state.isAuthenticated = false;
-      state.userInfo = {};
-      return state;
+    case CONSTANTS.AUTH_ERROR: {
+      state.error = true;
+      return { ...state };
+    }
+
+    case CONSTANTS.CLEAN_ERROR: {
+      state.error = false;
+      return { ...state };
     }
 
     default:
