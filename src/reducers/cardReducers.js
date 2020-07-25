@@ -38,6 +38,14 @@ const cardReducers = (state = initialState, action) => {
       return { ...state };
     }
 
+    case CONSTANTS.DRAG_CARD: {
+      const { droppableIdEnd, draggableId } = action.payload;
+
+      state[draggableId].list = droppableIdEnd;
+
+      return state;
+    }
+
     default:
       return state;
   }

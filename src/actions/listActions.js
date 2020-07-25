@@ -60,31 +60,63 @@ export const dragAndDrop = (
   return (dispatch, getState) => {
     const boardID = getState().activeBoard;
     if (type === 'list') {
+      if (droppableIndexStart === droppableIndexEnd) {
+        return;
+      }
       dispatch({
         type: CONSTANTS.DRAG_LIST,
         payload: {
-          droppableIdStart,
-          droppableIdEnd,
-          droppableIndexEnd,
-          droppableIndexStart,
-          draggableId,
-          type,
-          boardID
+          droppableIndexStart, // start list index
+          droppableIndexEnd, // end list index
+          boardID // board id
         }
       });
+
+      axios
+        .post(`${baseURL}/swap`, {
+          droppableIndexStart,
+          droppableIndexEnd,
+          boardID,
+          draggableId
+        })
+        .then(() => {
+          console.log('success');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
+      if (
+        droppableIdStart === droppableIdEnd &&
+        droppableIndexEnd === droppableIndexStart
+      ) {
+        return;
+      }
       dispatch({
         type: CONSTANTS.DRAG_CARD,
         payload: {
+          droppableIdStart, // start list id
+          droppableIdEnd, // end list id
+          droppableIndexEnd, // start index
+          droppableIndexStart, // end index
+          draggableId
+        }
+      });
+
+      axios
+        .post('http://localhost:5000/api/card/swap', {
           droppableIdStart,
           droppableIdEnd,
           droppableIndexEnd,
           droppableIndexStart,
-          draggableId,
-          type,
-          boardID
-        }
-      });
+          draggableId
+        })
+        .then(() => {
+          console.log('success');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 };
