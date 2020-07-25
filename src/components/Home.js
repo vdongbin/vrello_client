@@ -54,9 +54,8 @@ const CreateInput = styled.input`
 
 const Home = ({ auth, boards, boardArrays, dispatch, loading }) => {
   const [newBoardTitle, setNewBoardTitle] = useState('');
-
   useEffect(() => {
-    if (auth.isAuthenticated) {
+    if (auth.data) {
       return;
     }
     dispatch(getData());
@@ -77,7 +76,6 @@ const Home = ({ auth, boards, boardArrays, dispatch, loading }) => {
   const renderBoards = () => {
     return boardArrays.map((boardID) => {
       const board = boards[boardID];
-      console.log(board);
       return (
         <Link
           key={boardID}

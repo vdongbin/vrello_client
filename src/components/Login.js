@@ -15,7 +15,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-function Copyright() {
+
+const Copyright = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © Vrello '}
@@ -23,7 +24,7 @@ function Copyright() {
       {'.'}
     </Typography>
   );
-}
+};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -56,14 +57,11 @@ const Login = ({ auth, dispatch }) => {
     if (auth.error) {
       alert('올바르지 않은 회원정보입니다.');
       dispatch(cleanError());
-      setInputState({
-        email: '',
-        password: ''
-      });
     }
   }, [auth.error]);
 
   const handleSubmit = () => {
+    console.log(inputState);
     dispatch(login(inputState));
   };
 

@@ -3,7 +3,8 @@ import { CONSTANTS } from '../actions';
 const initialState = {
   isAuthenticated: false,
   userInfo: {},
-  error: false
+  error: false,
+  data: false
 };
 
 const authReducers = (state = initialState, action) => {
@@ -21,6 +22,11 @@ const authReducers = (state = initialState, action) => {
 
     case CONSTANTS.CLEAN_ERROR: {
       state.error = false;
+      return { ...state };
+    }
+
+    case CONSTANTS.GET_DATA: {
+      state.data = true;
       return { ...state };
     }
 

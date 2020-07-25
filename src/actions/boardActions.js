@@ -3,14 +3,12 @@ import axios from 'axios';
 const baseURL = 'http://localhost:5000/api/board';
 
 export const addBoard = (title) => {
-  console.log(title);
-  return (dispatch, getState) => {
+  return (dispatch) => {
     axios
       .post(`${baseURL}`, {
         title
       })
       .then((res) => {
-        console.log(res);
         dispatch({
           type: CONSTANTS.ADD_BOARD,
           payload: res.data
@@ -37,7 +35,7 @@ export const setLoading = (boolean) => {
 };
 
 export const getData = () => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(setLoading(true));
     axios
       .get(`${baseURL}`)

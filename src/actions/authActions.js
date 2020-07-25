@@ -1,5 +1,6 @@
 import { CONSTANTS } from '.';
 import axios from 'axios';
+import setAuthToken from '../utils/setAuthToken';
 const baseURL = 'http://localhost:5000/api/auth';
 
 export const login = (userInfo) => {
@@ -7,9 +8,12 @@ export const login = (userInfo) => {
     axios
       .post(`${baseURL}`, userInfo)
       .then((res) => {
+        const { token, userInfo } = res.data;
+        localStorage.setItem('vrello_jwt', token);
+        setAuthToken(token);
         dispatch({
           type: CONSTANTS.SET_USER,
-          payload: res.data
+          payload: userInfo
         });
       })
       .catch((err) => {
@@ -40,6 +44,14 @@ export const cleanError = () => {
   return (dispatch, getState) => {
     dispatch({
       type: CONSTANTS.CLEAN_ERROR
+    });
+  };
+};
+
+export const checkData = () => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: CONSTANTS.GET_DATA
     });
   };
 };

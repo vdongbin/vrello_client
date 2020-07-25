@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Navbar = ({ auth, dispatch }) => {
+const Navbar = ({ auth }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -93,7 +93,7 @@ const Navbar = ({ auth, dispatch }) => {
     setOpen(false);
   };
 
-  const logout = () => {
+  const handleLogout = () => {
     console.log('logout');
   };
 
@@ -146,7 +146,7 @@ const Navbar = ({ auth, dispatch }) => {
               <ListItem
                 button
                 component={Link}
-                to="/login"
+                to="/"
                 key={text}
                 onClick={handleDrawerClose}
               >
@@ -175,7 +175,7 @@ const Navbar = ({ auth, dispatch }) => {
                   key={text}
                   onClick={() => {
                     handleDrawerClose();
-                    logout();
+                    handleLogout();
                   }}
                 >
                   <ListItemIcon>
