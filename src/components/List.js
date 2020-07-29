@@ -19,9 +19,8 @@ const ListContainer = styled.div`
 const StyledInput = styled.input`
   width: 100%;
   border: none;
-  outline-color: blue;
   border-radius: 3px;
-  margin-bottom: 3px;
+  margin-bottom: 10px;
   padding: 5px;
 `;
 
@@ -45,7 +44,7 @@ const DeleteButton = styled(Icon)`
 
 const ListTitle = styled.h4`
   transition: background 0.3s ease-in;
-  ${TitleContainer}:hover & {
+  &:hover {
     background: #ccc;
   }
 `;

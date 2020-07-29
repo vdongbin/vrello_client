@@ -9,6 +9,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Board from './components/Board';
+import Mypage from './components/Mypage';
 import PrivateRoutes from './PrivateRoutes';
 import Navbar from './components/Navbar';
 
@@ -19,6 +20,7 @@ const AppRouter = () => {
       <Switch>
         <PrivateRoutes path="/" exact component={Home} />
         <PrivateRoutes path="/board/:boardID" component={Board} />
+        <PrivateRoutes path="/mypage" component={Mypage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Redirect path="*" to="/" />

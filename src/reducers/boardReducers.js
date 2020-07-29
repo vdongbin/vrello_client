@@ -14,9 +14,23 @@ const boardReducers = (state = initialState, action) => {
       return { ...state, [_id]: newBoard };
     }
 
+    case CONSTANTS.EDIT_BOARD: {
+      const { title, boardId } = action.payload;
+
+      const board = state[boardId];
+      board.title = title;
+      return { ...state, [boardId]: board };
+    }
+
+    case CONSTANTS.DELETE_BOARD: {
+      const boardId = action.payload;
+      delete state[boardId];
+      return { ...state };
+    }
+
     case CONSTANTS.GET_DATA: {
       const dataObj = {};
-      action.payload.forEach((e) => {
+      action.payload.boards.forEach((e) => {
         dataObj[e._id] = {
           id: e._id,
           lists: e.lists,
@@ -71,6 +85,11 @@ const boardReducers = (state = initialState, action) => {
       board.lists = lists;
 
       return { ...state, [boardID]: board };
+    }
+
+    case CONSTANTS.LOGOUT: {
+      state = { ...initialState };
+      return state;
     }
 
     default:

@@ -20,6 +20,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import BoardIcon from '@material-ui/icons/Assignment';
 import MypageIcon from '@material-ui/icons/AccountBox';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
+import { logout } from '../actions';
 
 const drawerWidth = 240;
 
@@ -80,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Navbar = ({ auth }) => {
+const Navbar = ({ auth, dispatch }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -94,7 +95,7 @@ const Navbar = ({ auth }) => {
   };
 
   const handleLogout = () => {
-    console.log('logout');
+    dispatch(logout());
   };
 
   return (
@@ -156,7 +157,13 @@ const Navbar = ({ auth }) => {
                 <ListItemText primary={text} />
               </ListItem>
             ) : (
-              <ListItem button key={text} onClick={handleDrawerClose}>
+              <ListItem
+                component={Link}
+                to="/mypage"
+                button
+                key={text}
+                onClick={handleDrawerClose}
+              >
                 <ListItemIcon>
                   <MypageIcon />
                 </ListItemIcon>
@@ -165,7 +172,7 @@ const Navbar = ({ auth }) => {
             )
           )}
         </List>
-        {auth && (
+        {auth.isAuthenticated && (
           <div>
             <Divider />
             <List>

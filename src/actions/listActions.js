@@ -63,6 +63,17 @@ export const dragAndDrop = (
       if (droppableIndexStart === droppableIndexEnd) {
         return;
       }
+      axios
+        .post(`${baseURL}/swap`, {
+          droppableIndexStart,
+          droppableIndexEnd,
+          boardID,
+          draggableId
+        })
+        .then(() => {})
+        .catch((err) => {
+          console.log(err);
+        });
       dispatch({
         type: CONSTANTS.DRAG_LIST,
         payload: {
@@ -71,20 +82,6 @@ export const dragAndDrop = (
           boardID // board id
         }
       });
-
-      axios
-        .post(`${baseURL}/swap`, {
-          droppableIndexStart,
-          droppableIndexEnd,
-          boardID,
-          draggableId
-        })
-        .then(() => {
-          console.log('success');
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     } else {
       if (
         droppableIdStart === droppableIdEnd &&
@@ -92,6 +89,18 @@ export const dragAndDrop = (
       ) {
         return;
       }
+      axios
+        .post('http://localhost:5000/api/card/swap', {
+          droppableIdStart,
+          droppableIdEnd,
+          droppableIndexEnd,
+          droppableIndexStart,
+          draggableId
+        })
+        .then(() => {})
+        .catch((err) => {
+          console.log(err);
+        });
       dispatch({
         type: CONSTANTS.DRAG_CARD,
         payload: {
@@ -102,21 +111,6 @@ export const dragAndDrop = (
           draggableId
         }
       });
-
-      axios
-        .post('http://localhost:5000/api/card/swap', {
-          droppableIdStart,
-          droppableIdEnd,
-          droppableIndexEnd,
-          droppableIndexStart,
-          draggableId
-        })
-        .then(() => {
-          console.log('success');
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     }
   };
 };

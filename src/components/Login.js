@@ -61,7 +61,6 @@ const Login = ({ auth, dispatch }) => {
   }, [auth.error]);
 
   const handleSubmit = () => {
-    console.log(inputState);
     dispatch(login(inputState));
   };
 

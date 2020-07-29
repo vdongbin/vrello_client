@@ -8,6 +8,11 @@ const activeBoardReducers = (state = initialState, action) => {
       return action.payload;
     }
 
+    case CONSTANTS.LOGOUT: {
+      state = { ...initialState };
+      return state;
+    }
+
     default:
       return state;
   }

@@ -4,6 +4,19 @@ const initialState = {};
 
 const listReducers = (state = initialState, action) => {
   switch (action.type) {
+    case CONSTANTS.GET_DATA: {
+      const dataObj = {};
+      action.payload.lists.forEach((e) => {
+        dataObj[e._id] = {
+          id: e._id,
+          cards: e.cards,
+          title: e.title
+        };
+      });
+      state = { ...dataObj };
+      return state;
+    }
+
     case CONSTANTS.ADD_LIST: {
       const { title, id } = action.payload;
       const newList = {
@@ -86,6 +99,11 @@ const listReducers = (state = initialState, action) => {
       const { listID } = action.payload;
       delete state[listID];
       return { ...state };
+    }
+
+    case CONSTANTS.LOGOUT: {
+      state = { ...initialState };
+      return state;
     }
 
     default:

@@ -40,6 +40,35 @@ export const signup = (userInfo, history) => {
   };
 };
 
+export const setAuthLoading = (boolean) => {
+  return {
+    type: CONSTANTS.AUTH_LOADING,
+    payload: boolean
+  };
+};
+
+export const editProfile = (userInfo, callback) => {
+  return (dispatch, getState) => {
+    dispatch(setAuthLoading(true));
+    axios
+      .put(`${baseURL}/profile`, userInfo)
+      .then(() => {
+        dispatch({
+          type: CONSTANTS.EDIT_PROFILE,
+          payload: userInfo
+        });
+        callback();
+        dispatch(setAuthLoading(false));
+      })
+      .catch((err) => {
+        dispatch({
+          type: CONSTANTS.AUTH_ERROR
+        });
+        dispatch(setAuthLoading(false));
+      });
+  };
+};
+
 export const cleanError = () => {
   return (dispatch, getState) => {
     dispatch({
@@ -53,5 +82,33 @@ export const checkData = () => {
     dispatch({
       type: CONSTANTS.GET_DATA
     });
+  };
+};
+
+export const deleteAccount = () => {
+  return (dispatch, getState) => {
+    dispatch(setAuthLoading(true));
+    axios
+      .delete(`${baseURL}`)
+      .then(() => {
+        dispatch({
+          type: CONSTANTS.LOGOUT
+        });
+        localStorage.removeItem('vrello_jwt');
+        setAuthToken(null);
+        dispatch(setAuthLoading(false));
+      })
+      .catch((err) => {
+        alert('회원삭제 오류입니다. 다시 시도해주세요.');
+        dispatch(setAuthLoading(false));
+      });
+  };
+};
+
+export const logout = () => {
+  localStorage.removeItem('vrello_jwt');
+  setAuthToken(null);
+  return {
+    type: CONSTANTS.LOGOUT
   };
 };

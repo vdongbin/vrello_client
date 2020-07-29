@@ -4,7 +4,8 @@ const initialState = {
   isAuthenticated: false,
   userInfo: {},
   error: false,
-  data: false
+  data: false,
+  loading: false
 };
 
 const authReducers = (state = initialState, action) => {
@@ -12,6 +13,17 @@ const authReducers = (state = initialState, action) => {
     case CONSTANTS.SET_USER: {
       state.isAuthenticated = true;
       state.userInfo = action.payload;
+      return { ...state };
+    }
+
+    case CONSTANTS.EDIT_PROFILE: {
+      state.userInfo = action.payload;
+      return { ...state };
+    }
+
+    case CONSTANTS.AUTH_LOADING: {
+      console.log(action.payload);
+      state.loading = action.payload;
       return { ...state };
     }
 
@@ -28,6 +40,11 @@ const authReducers = (state = initialState, action) => {
     case CONSTANTS.GET_DATA: {
       state.data = true;
       return { ...state };
+    }
+
+    case CONSTANTS.LOGOUT: {
+      state = { ...initialState };
+      return state;
     }
 
     default:

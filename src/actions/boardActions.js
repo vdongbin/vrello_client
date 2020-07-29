@@ -20,6 +20,53 @@ export const addBoard = (title) => {
   };
 };
 
+export const editBoardTitle = (boardId, title) => {
+  return (dispatch) => {
+    axios
+      .put(`${baseURL}`, {
+        title,
+        boardId
+      })
+      .then(() => {
+        dispatch({
+          type: CONSTANTS.EDIT_BOARD,
+          payload: {
+            boardId,
+            title
+          }
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+export const deleteBoard = (boardId, history) => {
+  return (dispatch) => {
+    history.push('/');
+    dispatch(setLoading(true));
+    axios
+      .delete(`${baseURL}`, {
+        data: {
+          boardId
+        }
+      })
+      .then(() => {
+        dispatch({
+          type: CONSTANTS.DELETE_BOARD,
+          payload: boardId
+        });
+
+        dispatch(setLoading(false));
+      })
+      .catch((err) => {
+        dispatch(setLoading(false));
+        console.log(err);
+      });
+  };
+};
+
 export const setActiveBoard = (id) => {
   return {
     type: CONSTANTS.SET_ACTIVE_BOARD,
@@ -44,11 +91,10 @@ export const getData = () => {
           type: CONSTANTS.GET_DATA,
           payload: res.data
         });
-        setTimeout(() => {
-          dispatch(setLoading(false));
-        }, 1000);
+        dispatch(setLoading(false));
       })
       .catch((err) => {
+        dispatch(setLoading(false));
         console.log(err);
       });
   };
