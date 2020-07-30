@@ -1,7 +1,8 @@
 import { CONSTANTS } from '.';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
-const baseURL = 'http://localhost:5000/api/auth';
+const baseURL =
+  'http://ec2-13-124-18-148.ap-northeast-2.compute.amazonaws.com:5000/api/auth';
 
 export const login = (userInfo) => {
   return (dispatch, getState) => {
