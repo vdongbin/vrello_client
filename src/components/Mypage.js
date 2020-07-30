@@ -48,6 +48,7 @@ const ButtonContainer = styled.div`
 `;
 
 const Mypage = ({ auth, dispatch }) => {
+  console.log(auth.error);
   const [userInfo, setUserInfo] = useState({
     email: auth.userInfo.email,
     username: auth.userInfo.username
@@ -91,7 +92,7 @@ const Mypage = ({ auth, dispatch }) => {
 
   const submitEditForm = () => {
     const { email, username } = editInfo;
-    dispatch(editProfile({ email, username }), () => {
+    const callback = () => {
       setUserInfo({
         email,
         username
@@ -100,7 +101,8 @@ const Mypage = ({ auth, dispatch }) => {
         email,
         username
       });
-    });
+    };
+    dispatch(editProfile({ email, username }, callback));
     setIsEditing(false);
   };
 

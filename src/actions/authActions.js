@@ -48,6 +48,7 @@ export const setAuthLoading = (boolean) => {
 };
 
 export const editProfile = (userInfo, callback) => {
+  console.log(callback);
   return (dispatch, getState) => {
     dispatch(setAuthLoading(true));
     axios
@@ -61,6 +62,7 @@ export const editProfile = (userInfo, callback) => {
         dispatch(setAuthLoading(false));
       })
       .catch((err) => {
+        console.log(err);
         dispatch({
           type: CONSTANTS.AUTH_ERROR
         });

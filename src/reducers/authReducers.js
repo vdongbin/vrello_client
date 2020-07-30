@@ -22,7 +22,6 @@ const authReducers = (state = initialState, action) => {
     }
 
     case CONSTANTS.AUTH_LOADING: {
-      console.log(action.payload);
       state.loading = action.payload;
       return { ...state };
     }
