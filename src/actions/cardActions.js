@@ -1,7 +1,7 @@
 import { CONSTANTS } from '../actions';
 import axios from 'axios';
 const baseURL =
-  'http://ec2-13-124-18-148.ap-northeast-2.compute.amazonaws.com:5000/api/card';
+  'https://ec2-13-124-18-148.ap-northeast-2.compute.amazonaws.com:5000/api/card';
 
 export const addCard = (listID, text) => {
   return (dispatch) => {

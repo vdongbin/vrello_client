@@ -1,7 +1,7 @@
 import { CONSTANTS } from '../actions';
 import axios from 'axios';
 const baseURL =
-  'http://ec2-13-124-18-148.ap-northeast-2.compute.amazonaws.com:5000/api/list';
+  'https://ec2-13-124-18-148.ap-northeast-2.compute.amazonaws.com:5000/api/list';
 
 export const addList = (title) => {
   return (dispatch, getState) => {
@@ -92,7 +92,7 @@ export const dragAndDrop = (
       }
       axios
         .post(
-          'http://ec2-13-124-18-148.ap-northeast-2.compute.amazonaws.com:5000/api/card/swap',
+          'https://ec2-13-124-18-148.ap-northeast-2.compute.amazonaws.com:5000/api/card/swap',
           {
             droppableIdStart,
             droppableIdEnd,

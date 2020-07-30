@@ -1,7 +1,7 @@
 import { CONSTANTS } from '.';
 import axios from 'axios';
 const baseURL =
-  'http://ec2-13-124-18-148.ap-northeast-2.compute.amazonaws.com:5000/api/board';
+  'https://ec2-13-124-18-148.ap-northeast-2.compute.amazonaws.com:5000/api/board';
 
 export const addBoard = (title) => {
   return (dispatch) => {
