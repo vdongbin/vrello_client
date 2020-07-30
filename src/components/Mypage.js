@@ -48,7 +48,6 @@ const ButtonContainer = styled.div`
 `;
 
 const Mypage = ({ auth, dispatch }) => {
-  console.log(auth.error);
   const [userInfo, setUserInfo] = useState({
     email: auth.userInfo.email,
     username: auth.userInfo.username
